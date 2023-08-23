@@ -3,7 +3,7 @@ const app = express();
 const sqlite3 = require("sqlite3");
 const { open } = require("sqlite");
 const path = require("path");
-
+app.use(express.json());
 const dbPath = path.join(__dirname, "covid19India.db");
 let db = null;
 
@@ -148,7 +148,7 @@ app.get("/districts/:districtId/details/", async (request, response) => {
         ON state.state_id=district.state_id
     WHERE district.district_id=${districtId};`;
   const stateName = await db.get(stateDetails);
-  response.send({ stateName: stateName.state_id });
+  response.send({ stateName: stateName.state_name });
 });
 
 module.exports = app;
